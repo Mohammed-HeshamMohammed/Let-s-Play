@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition</title>
+    <link rel="stylesheet" href="css/valentine.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital,wght@1,300&family=Poppins:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Bellota Text', sans-serif;
+        }
+        body, html {
+            width: 100%;
+            height: 100vh;
+            background-image: url("https://img.freepik.com/free-vector/cloud-background-vector-cute-desktop-wallpaper_53876-136885.jpg?w=826&t=st=1704789857~exp=1704790457~hmac=381926ab355f58892a476af4dd9c1b104192572bd7b1a38ac49528094d2ec6ce");
+            background-size: cover;
+            position: relative;
+        }
+        .confirmation {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 5;
+        }
+        .confirmation h1 {
+            font-style: bolder;
+            font-size: 40px; /* Increased font size */
+            font-weight: 700;
+            text-shadow: 0px 3px 6px rgb(147, 77, 77);
+            line-height: 50px; /* Adjusted line height */
+        }
+        .gif {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 1;
+        }
+        .gifimg {
+            border-radius: 10px;
+            width: 253px;
+            height: 191px;
+            background-size: cover;
+            background-image: url("tran.gif");
+        }
+        @media screen and (max-width: 600px) {
+            .gifimg {
+                border-radius: 10px;
+                width: 253px;
+                height: 191px;
+            }
+            .confirmation {
+                width: 100%;
+                height: 100vh;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation">
+        <h1>Thank you lots<br>I hope I can always be with you and make you smile like you make me</h1>
+        <div class="gif">
+            <div class="gifimg"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                window.location.href = 'lastpage.html';
+            }, 10000); // Display confirmation for 20 seconds before redirecting
+        });
+    </script>
+</body>
+</html>

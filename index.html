@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can we Play together ?</title>
+    <link rel="stylesheet" href="css/valentine.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital,wght@1,300&family=Poppins:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Bellota Text', sans-serif;
+        }
+        body, html {
+            width: 100%;
+            height: 100vh;
+            background-image: url("https://img.freepik.com/free-vector/cloud-background-vector-cute-desktop-wallpaper_53876-136885.jpg?w=826&t=st=1704789857~exp=1704790457~hmac=381926ab355f58892a476af4dd9c1b104192572bd7b1a38ac49528094d2ec6ce");
+            background-size: cover;
+            position: relative;
+        }
+        .answerButton {
+            position: relative;
+            z-index: 10;
+        }
+        img.responsive {
+            max-width: 100%;
+            height: auto;
+        }
+        @media screen and (max-width: 600px) {
+            .answerButton {
+                font-size: 16px;
+                padding: 8px;
+            }
+            #valentineQuestion {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="valentineQuestion"><b>Will you play with me Sweets ?</b></div>
+    <button class="answerButton" id="yesButton">Yes</button>
+    <button class="answerButton" id="noButton">no o(╥﹏╥)o</button>
+    <br />
+    <img src="cat.gif" alt="cat asking question" class="responsive" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const yesButton = document.getElementById("yesButton");
+            const noButton = document.getElementById("noButton");
+
+            noButton.addEventListener("click", () => {
+                const currentFontSize = parseInt(window.getComputedStyle(yesButton).fontSize);
+                yesButton.style.fontSize = `${currentFontSize + 10}px`; // Increase font size by 10px
+            });
+
+            const yesAnswerMethod = () => {
+                window.location.href = 'transition.html';
+            };
+
+            const noAnswerMethod = () => {
+                noButton.style.position = 'absolute';
+                const buttonWidth = noButton.offsetWidth;
+                const buttonHeight = noButton.offsetHeight;
+                const xPosition = Math.floor(Math.random() * (window.innerWidth - buttonWidth));
+                const yPosition = Math.floor(Math.random() * (window.innerHeight - buttonHeight));
+                noButton.style.top = `${yPosition}px`;
+                noButton.style.left = `${xPosition}px`;
+            };
+
+            yesButton.addEventListener('click', yesAnswerMethod);
+            noButton.addEventListener('click', noAnswerMethod);
+            noButton.addEventListener("mouseover", noAnswerMethod);
+
+            // Apply hover effect to noButton
+            noButton.addEventListener("mouseover", () => {
+                noButton.style.boxShadow = "inset 0px 3px 6px rgba(0, 0, 0, 0.449)";
+            });
+
+            noButton.addEventListener("mouseout", () => {
+                noButton.style.boxShadow = "none";
+            });
+        });
+    </script>
+</body>
+</html>

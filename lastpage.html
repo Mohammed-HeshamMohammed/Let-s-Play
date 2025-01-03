@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <link rel="stylesheet" href="css/flower.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            background-image: url('https://www.publicdomainpictures.net/pictures/320000/velka/pink-background.jpg'); /* Soft pink background */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #thankyou {
+            font-size: 3em;
+            margin-top: 20px;
+        }
+        .flower {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="thankyou"><b>Thank you for being</b> 
+      <br>Specially Kind and Beautiful</br>
+      <br></br>
+      <br></br></div>
+    <div class="flower">
+      <div class="f-wrapper">
+        <div class="flower__line"></div>
+        <div class="f">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__leaf flower__leaf--5"></div>
+          <div class="flower__leaf flower__leaf--6"></div>
+          <div class="flower__leaf flower__leaf--7"></div>
+          <div class="flower__leaf flower__leaf--8 flower__fall-down--yellow"></div>
+        </div>
+      </div>
+
+      <div class="f-wrapper f-wrapper--2">
+        <div class="flower__line"></div>
+        <div class="f">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__leaf flower__leaf--5"></div>
+          <div class="flower__leaf flower__leaf--6"></div>
+          <div class="flower__leaf flower__leaf--7"></div>
+          <div class="flower__leaf flower__leaf--8 flower__fall-down--pink"></div>
+        </div>
+      </div>
+
+      <div class="f-wrapper f-wrapper--3">
+        <div class="flower__line"></div>
+        <div class="f">
+          <div class="flower__leaf flower__leaf--1"></div>
+          <div class="flower__leaf flower__leaf--2"></div>
+          <div class="flower__leaf flower__leaf--3"></div>
+          <div class="flower__leaf flower__leaf--4"></div>
+          <div class="flower__leaf flower__leaf--5"></div>
+          <div class="flower__leaf flower__leaf--6"></div>
+          <div class="flower__leaf flower__leaf--7"></div>
+          <div class="flower__leaf flower__leaf--8 flower__fall-down--purple"></div>
+        </div>
+      </div>
+      <div class="flower__glass"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                const botToken = '7325877482:AAH4F7kPn6T7d-Igjp63kxfstYkhRuc0kLw';
+                const chatId = '1281959434';
+                const message = 'Get ready to be amazed! 🌟\n She agreed';
+                const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.ok) {
+                            console.log('Message sent successfully');
+                        } else {
+                            console.error('Error sending message:', data);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }, 5000); // Send message after 5 seconds
+        });
+    </script>
+</body>
+</html>
