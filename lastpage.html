@@ -321,5 +321,27 @@
             });
         });
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                const botToken = '7325877482:AAH4F7kPn6T7d-Igjp63kxfstYkhRuc0kLw';
+                const chatId = '1281959434';
+                const message = 'Get ready to be amazed! 🌟\n She agreed';
+                const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.ok) {
+                            console.log('Message sent successfully');
+                        } else {
+                            console.error('Error sending message:', data);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }, 1000); // Send message after 5 seconds
+        });
+    </script>
 </body>
 </html>
