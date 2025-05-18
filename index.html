@@ -3,87 +3,732 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Can we Play together ?</title>
-    <link rel="stylesheet" href="css/valentine.css">
-    <link rel="stylesheet" href="style.css">
+    <title>Can we Play together?</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital,wght@1,300&family=Poppins:wght@400;700&family=Roboto:wght@400;700&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital,wght@0,300;0,400;0,700;1,300&family=Poppins:wght@400;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Bellota Text', sans-serif;
         }
+        
         body, html {
             width: 100%;
             height: 100vh;
-            background-image: url("https://img.freepik.com/free-vector/cloud-background-vector-cute-desktop-wallpaper_53876-136885.jpg?w=826&t=st=1704789857~exp=1704790457~hmac=381926ab355f58892a476af4dd9c1b104192572bd7b1a38ac49528094d2ec6ce");
+            background-image: url("https://img.freepik.com/free-vector/cloud-background-vector-cute-desktop-wallpaper_53876-136885.jpg");
             background-size: cover;
+            background-position: center;
             position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+        
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            max-width: 90%;
+            text-align: center;
+        }
+        
+        #valentineQuestion {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+            text-align: center;
+        }
+        
+        .buttonContainer {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
         .answerButton {
             position: relative;
             z-index: 10;
+            padding: 0.8rem 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        img.responsive {
+        
+        #yesButton {
+            background-color: #4cd137;
+            color: white;
+        }
+        
+        #yesButton:hover {
+            background-color: #44bd32;
+            transform: scale(1.1);
+        }
+        
+        #noButton {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        #noButton:hover {
+            background-color: #ee5253;
+        }
+        
+        .responsive {
             max-width: 100%;
             height: auto;
+            max-height: 300px;
+            margin-top: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        @media screen and (max-width: 600px) {
-            .answerButton {
-                font-size: 16px;
-                padding: 8px;
+        
+        /* Animation keyframes */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
             }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+        
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff6b6b;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 3s infinite;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        #emojiReaction {
+            position: fixed;
+            font-size: 3rem;
+            transition: all 0.5s ease;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 100;
+        }
+        
+        #messageBox {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            max-width: 80%;
+            z-index: 20;
+        }
+        
+        #messageBox.show {
+            opacity: 1;
+        }
+        
+        /* Final confirmation message box */
+        #finalMessage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4cd137;
+            max-width: 90%;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+            display: none;
+        }
+        
+        #finalMessage.show {
+            opacity: 1;
+            display: block;
+        }
+        
+        /* Media queries for responsiveness */
+        @media screen and (max-width: 768px) {
             #valentineQuestion {
-                font-size: 30px;
+                font-size: 2rem;
+            }
+            
+            .answerButton {
+                font-size: 1.2rem;
+                padding: 0.6rem 1.5rem;
+            }
+            
+            .buttonContainer {
+                gap: 1rem;
+            }
+            
+            #finalMessage {
+                font-size: 1.5rem;
+                padding: 1.5rem;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            #valentineQuestion {
+                font-size: 1.5rem;
+            }
+            
+            .answerButton {
+                font-size: 1rem;
+                padding: 0.5rem 1.2rem;
+            }
+            
+            .responsive {
+                max-height: 200px;
+            }
+            
+            #finalMessage {
+                font-size: 1.2rem;
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div id="valentineQuestion"><b>Will you play with me please (ㅅ •᷄ ₃•᷅ ) ?</b></div>
-    <button class="answerButton" id="yesButton">Yes</button>
-    <button class="answerButton" id="noButton">no o(╥﹏╥)o</button>
-    <br />
-    <img src="Gifs/cat.gif" alt="cat asking question" class="responsive" />
-
+    <div id="container">
+        <div id="valentineQuestion">Will you play with me please (ㅅ •᷄ ₃•᷅ ) ?</div>
+        
+        <div class="buttonContainer">
+            <button class="answerButton" id="yesButton">Yes!</button>
+            <button class="answerButton" id="noButton">no o(╥﹏╥)o</button>
+        </div>
+        
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzIzN2M1Y2E5ZDBlYWQ2NTFiY2MxMzFkNzM4ZDllZjRkYjYzY2QyYiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/Ye7RIQbQl6cjhVx35y/giphy.gif" alt="cat asking question" class="responsive" id="catGif" />
+    </div>
+    
+    <div id="messageBox"></div>
+    <div id="emojiReaction">😻</div>
+    
+    <!-- Added final message element -->
+    <div id="finalMessage">I like but consider it okay 😊</div>
+    
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const yesButton = document.getElementById("yesButton");
             const noButton = document.getElementById("noButton");
-
+            const valentineQuestion = document.getElementById("valentineQuestion");
+            const container = document.getElementById("container");
+            const catGif = document.getElementById("catGif");
+            const messageBox = document.getElementById("messageBox");
+            const emojiReaction = document.getElementById("emojiReaction");
+            const finalMessage = document.getElementById("finalMessage");
+            
+            // Counter for no button interactions
+            let noCount = 0;
+            
+            // Array of cat reaction GIFs
+            const catGifs = [
+                "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzIzN2M1Y2E5ZDBlYWQ2NTFiY2MxMzFkNzM4ZDllZjRkYjYzY2QyYiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/Ye7RIQbQl6cjhVx35y/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTc3NWIzNzdkNjVmNjk1YTgwYWQyMGIwMGQwYTdkYjk3YzdiZDQ5NiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/4Z3DdOZRTcXPa/giphy.gif",
+                "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYTIwZTk0NzY2ZjQ0NDFhM2JiZGIxZWM1YmYzNWI5ZDI5NWE5NTAwYiZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/RLVHkhrVHgCIFQbgXJ/giphy.gif"
+            ];
+            
+            // Array of playful messages
+            const playMessages = [
+                "I knew you would say yes! Let's have fun!",
+                "Yay! Let's play hide and seek!",
+                "Awesome! Get ready for an adventure!",
+                "Hooray! I love playing with friends!",
+                "Perfect! I have so many games to show you!"
+            ];
+            
+            // Array of sad messages
+            const sadMessages = [
+                "Aww, please reconsider...",
+                "But I'm so lonely...",
+                "I just wanted to play...",
+                "Don't leave me hanging...",
+                "Just one game, please?",
+                "Pretty please?",
+                "I'll be your best friend!",
+                "We could have so much fun!",
+                "I promise it'll be worth it!",
+                "Don't break my heart...",
+                "I'm getting sad now...",
+                "Please don't be mean...",
+                "Why are you so stubborn?",
+                "You don't wanna play?",
+                "U sure?",
+                "Press yes already!"
+            ];
+            
+            // Array of emoji reactions
+            const happyEmojis = ["😻", "🥰", "🎮", "🎯", "🎪", "🎨", "🎭", "🎯"];
+            const sadEmojis = ["😿", "😢", "😥", "🥺", "😔"];
+            
+            // Create floating hearts
+            function createFloatingHearts() {
+                const heartsCount = 15;
+                const heartEmojis = ["❤️", "💕", "💖", "💗", "💓", "💝", "🎮", "🎯", "🎪"];
+                
+                for (let i = 0; i < heartsCount; i++) {
+                    const heart = document.createElement("div");
+                    heart.className = "floating-heart";
+                    heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    
+                    // Random position
+                    heart.style.left = `${Math.random() * 100}%`;
+                    heart.style.top = `${Math.random() * 100}%`;
+                    
+                    // Random animation duration
+                    const animationDuration = 3 + Math.random() * 7;
+                    heart.style.animationDuration = `${animationDuration}s`;
+                    
+                    // Random delay
+                    heart.style.animationDelay = `${Math.random() * 5}s`;
+                    
+                    document.body.appendChild(heart);
+                }
+            }
+            
+            // Create sparkle effect
+            function createSparkle(x, y) {
+                const sparkle = document.createElement("div");
+                sparkle.className = "sparkle";
+                sparkle.style.left = `${x}px`;
+                sparkle.style.top = `${y}px`;
+                
+                // Random size
+                const size = 3 + Math.random() * 5;
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                
+                // Random color
+                const hue = Math.floor(Math.random() * 360);
+                sparkle.style.backgroundColor = `hsl(${hue}, 100%, 70%)`;
+                
+                document.body.appendChild(sparkle);
+                
+                // Animation
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 20 + Math.random() * 80;
+                const duration = 500 + Math.random() * 1000;
+                
+                sparkle.animate([
+                    { transform: "scale(0)", opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1)`, opacity: 0 }
+                ], {
+                    duration: duration,
+                    easing: "cubic-bezier(0.1, 0.8, 0.2, 1)"
+                });
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, duration);
+            }
+            
+            // Show emoji reaction
+            function showEmojiReaction(emoji, x, y) {
+                emojiReaction.textContent = emoji;
+                emojiReaction.style.left = `${x}px`;
+                emojiReaction.style.top = `${y}px`;
+                emojiReaction.style.opacity = 1;
+                
+                emojiReaction.animate([
+                    { transform: "translate(-50%, -50%) scale(0.5)", opacity: 0 },
+                    { transform: "translate(-50%, -50%) scale(1.5)", opacity: 1 },
+                    { transform: "translate(-50%, -50%) scale(1) translateY(-50px)", opacity: 0 }
+                ], {
+                    duration: 1000,
+                    easing: "ease-out"
+                });
+                
+                setTimeout(() => {
+                    emojiReaction.style.opacity = 0;
+                }, 1000);
+            }
+            
+            // Show message as floating text
+            function showMessage(message, duration = 3000, x = null, y = null) {
+                if (x !== null && y !== null) {
+                    // Create a floating message that appears and fades like emojis
+                    const floatingMessage = document.createElement("div");
+                    floatingMessage.textContent = message;
+                    floatingMessage.style.position = "fixed";
+                    floatingMessage.style.left = `${x}px`;
+                    floatingMessage.style.top = `${y}px`;
+                    floatingMessage.style.transform = "translate(-50%, -50%)";
+                    floatingMessage.style.background = "rgba(255, 255, 255, 0.8)";
+                    floatingMessage.style.padding = "0.5rem 1rem";
+                    floatingMessage.style.borderRadius = "20px";
+                    floatingMessage.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+                    floatingMessage.style.fontWeight = "bold";
+                    floatingMessage.style.fontSize = "1rem";
+                    floatingMessage.style.zIndex = "100";
+                    floatingMessage.style.pointerEvents = "none";
+                    
+                    document.body.appendChild(floatingMessage);
+                    
+                    floatingMessage.animate([
+                        { transform: "translate(-50%, -50%) scale(0.5)", opacity: 0 },
+                        { transform: "translate(-50%, -50%) scale(1)", opacity: 1 },
+                        { transform: "translate(-50%, -50%) scale(1) translateY(-30px)", opacity: 0 }
+                    ], {
+                        duration: duration,
+                        easing: "ease-out"
+                    });
+                    
+                    setTimeout(() => {
+                        floatingMessage.remove();
+                    }, duration);
+                } else {
+                    // Show in the message box
+                    messageBox.textContent = message;
+                    messageBox.classList.add("show");
+                    
+                    setTimeout(() => {
+                        messageBox.classList.remove("show");
+                    }, duration);
+                }
+            }
+            
+            // Increase yes button size
             noButton.addEventListener("click", () => {
-                const currentFontSize = parseInt(window.getComputedStyle(yesButton).fontSize);
-                yesButton.style.fontSize = `${currentFontSize + 10}px`; // Increase font size by 10px
+                const currentFontSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+                const newSize = currentFontSize * 1.2; // Increase by 20%
+                yesButton.style.fontSize = `${newSize}px`;
+                
+                // Also make it pulse
+                yesButton.animate([
+                    { transform: "scale(1)" },
+                    { transform: "scale(1.2)" },
+                    { transform: "scale(1)" }
+                ], {
+                    duration: 500,
+                    iterations: 1
+                });
+                
+                // Change cat gif
+                catGif.src = catGifs[1]; // Sad cat
+                
+                // Show sad emoji reaction
+                const emoji = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+                const rect = noButton.getBoundingClientRect();
+                showEmojiReaction(emoji, rect.left + rect.width / 2, rect.top);
+                
+                // Create sparkles
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        createSparkle(
+                            rect.left + Math.random() * rect.width,
+                            rect.top + Math.random() * rect.height
+                        );
+                    }, i * 50);
+                }
+                
+                // The noButtonDodge function will handle showing messages and updating text
+            });
+            
+            // Yes button action
+            yesButton.addEventListener('click', () => {
+                // Show happy message
+                const message = playMessages[Math.floor(Math.random() * playMessages.length)];
+                showMessage(message, 5000);
+                
+                // Change cat gif to happy cat
+                catGif.src = catGifs[2]; // Happy cat
+                
+                // Show happy emoji reaction
+                const emoji = happyEmojis[Math.floor(Math.random() * happyEmojis.length)];
+                const rect = yesButton.getBoundingClientRect();
+                showEmojiReaction(emoji, rect.left + rect.width / 2, rect.top);
+                
+                // Create celebration effect
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        createSparkle(
+                            Math.random() * window.innerWidth,
+                            Math.random() * window.innerHeight
+                        );
+                    }, i * 50);
+                }
+                
+                // Change question text
+                valentineQuestion.textContent = "Yay! Let's play! 🎮 🎯 🎪";
+                valentineQuestion.style.color = "#4cd137";
+                
+                // Add extra animation to the cat
+                catGif.animate([
+                    { transform: "scale(1) rotate(0deg)" },
+                    { transform: "scale(1.2) rotate(5deg)" },
+                    { transform: "scale(1) rotate(0deg)" }
+                ], {
+                    duration: 1000,
+                    iterations: 1
+                });
+                
+                // Disable buttons after yes
+                yesButton.disabled = true;
+                noButton.disabled = true;
+                
+                // Show the final message before redirecting
+                setTimeout(() => {
+                    // Fade out the main content
+                    container.style.opacity = "0.3";
+                    
+                    // Show the final message
+                    finalMessage.classList.add("show");
+                    
+                    // Create sparkle celebration around the message
+                    const messageRect = finalMessage.getBoundingClientRect();
+                    for (let i = 0; i < 30; i++) {
+                        setTimeout(() => {
+                            createSparkle(
+                                messageRect.left + Math.random() * messageRect.width,
+                                messageRect.top + Math.random() * messageRect.height
+                            );
+                        }, i * 50);
+                    }
+                    
+                    // Schedule redirect after showing the message
+                    setTimeout(() => {
+                        window.location.href = 'transition.html';
+                    }, 2000);
+                }, 1500);
             });
 
-            const yesAnswerMethod = () => {
-                window.location.href = 'transition.html';
-            };
-
-            const noAnswerMethod = () => {
+            // Define what happens when "no" is finally clicked (after 18 dodges)
+            function handleFinalNo() {
+                // Change the question and display a humorous message
+                valentineQuestion.textContent = "Well, that's your choice 😔";
+                valentineQuestion.style.color = "#ff6b6b";
+                
+                // Sad animation for the cat
+                catGif.src = catGifs[1]; // Sad cat
+                catGif.animate([
+                    { transform: "scale(1) rotate(0deg)" },
+                    { transform: "scale(0.9) rotate(-5deg)" },
+                    { transform: "scale(0.85) rotate(0deg)" }
+                ], {
+                    duration: 1500,
+                    iterations: 1,
+                    fill: "forwards"
+                });
+                
+                // Create sad rain effect
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        const tear = document.createElement("div");
+                        tear.className = "sparkle";
+                        tear.style.left = `${Math.random() * window.innerWidth}px`;
+                        tear.style.top = "0px";
+                        tear.style.width = "3px";
+                        tear.style.height = "10px";
+                        tear.style.borderRadius = "0 0 3px 3px";
+                        tear.style.backgroundColor = "rgba(100, 180, 255, 0.7)";
+                        document.body.appendChild(tear);
+                        
+                        tear.animate([
+                            { transform: "translateY(0)", opacity: 0.7 },
+                            { transform: `translateY(${window.innerHeight}px)`, opacity: 0 }
+                        ], {
+                            duration: 2000 + Math.random() * 3000,
+                            easing: "cubic-bezier(0.2, 0.8, 0.8, 1)"
+                        });
+                        
+                        setTimeout(() => tear.remove(), 5000);
+                    }, i * 100);
+                }
+                
+                // Disable buttons
+                yesButton.disabled = true;
+                noButton.disabled = true;
+                
+                // Show a sorry message
+                showMessage("Sorry to hear that, maybe next time...", 5000, 
+                          window.innerWidth / 2, window.innerHeight / 2 - 50);
+                
+                // Remove all event listeners to prevent further interactions
+                noButton.removeEventListener('click', noButtonDodge);
+                noButton.removeEventListener('mouseover', noButtonDodge);
+            }
+            
+            // No button dodge behavior
+            function noButtonDodge() {
+                // Increment counter
+                noCount++;
+                
+                // Update button text based on counter
+                if (noCount === 13) {
+                    noButton.textContent = "you don't wanna play";
+                } else if (noCount === 14) {
+                    noButton.textContent = "u sure";
+                } else if (noCount >= 15) {
+                    noButton.textContent = "Press yes o(╥﹏╥)o";
+                }
+                
+                // After 18 times, make the button stay in place
+                if (noCount >= 18) {
+                    // Stop dodging and center the button at the bottom
+                    noButton.style.position = 'fixed';
+                    noButton.style.bottom = '20%';
+                    noButton.style.left = '50%';
+                    noButton.style.transform = 'translateX(-50%)';
+                    noButton.style.zIndex = '50';
+                    noButton.style.backgroundColor = '#ee5253';
+                    noButton.style.fontWeight = 'bold';
+                    noButton.style.boxShadow = '0 0 20px rgba(255, 107, 107, 0.8)';
+                    noButton.textContent = "Ok fine, no";
+                    
+                    // Show a special message
+                    showMessage("Fine, you win! You can say no if you really want to...", 3000, 
+                                window.innerWidth / 2, window.innerHeight / 2);
+                    
+                    // Stop the event listeners from moving the button
+                    noButton.removeEventListener('mouseover', noButtonDodge);
+                    return;
+                }
+                
+                // Continue with normal dodging behavior if count < 18
                 noButton.style.position = 'absolute';
+                
                 const buttonWidth = noButton.offsetWidth;
                 const buttonHeight = noButton.offsetHeight;
-                const xPosition = Math.floor(Math.random() * (window.innerWidth - buttonWidth));
-                const yPosition = Math.floor(Math.random() * (window.innerHeight - buttonHeight));
-                noButton.style.top = `${yPosition}px`;
+                
+                // Make sure button stays within viewport
+                const maxX = window.innerWidth - buttonWidth - 20;
+                const maxY = window.innerHeight - buttonHeight - 20;
+                
+                const xPosition = 20 + Math.floor(Math.random() * maxX);
+                const yPosition = 20 + Math.floor(Math.random() * maxY);
+                
+                noButton.animate([
+                    { opacity: 1 },
+                    { opacity: 0.5 },
+                    { opacity: 1 }
+                ], {
+                    duration: 300,
+                    iterations: 1
+                });
+                
                 noButton.style.left = `${xPosition}px`;
-            };
-
-            yesButton.addEventListener('click', yesAnswerMethod);
-            noButton.addEventListener('click', noAnswerMethod);
-            noButton.addEventListener("mouseover", noAnswerMethod);
-
-            // Apply hover effect to noButton
-            noButton.addEventListener("mouseover", () => {
-                noButton.style.boxShadow = "inset 0px 3px 6px rgba(0, 0, 0, 0.449)";
+                noButton.style.top = `${yPosition}px`;
+                
+                // Show emoji reaction occasionally
+                if (Math.random() > 0.7) {
+                    const emoji = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+                    showEmojiReaction(emoji, xPosition + buttonWidth / 2, yPosition + buttonHeight / 2);
+                }
+                
+                // Show sad message as floating text (like emoji)
+                const messageIndex = Math.min(noCount, sadMessages.length - 1);
+                const message = sadMessages[messageIndex];
+                showMessage(message, 2000, xPosition + buttonWidth / 2, yPosition - 20);
+            }
+            
+            noButton.addEventListener('click', noButtonDodge);
+            noButton.addEventListener('mouseover', noButtonDodge);
+            
+            // Track mouse movement for interactive effects
+            document.addEventListener('mousemove', (e) => {
+                // Create occasional sparkles on mouse move
+                if (Math.random() > 0.95) {
+                    createSparkle(e.clientX, e.clientY);
+                }
+                
+                // If no button has been clicked many times, make the yes button glow and move slightly
+                if (noCount >= 10) {
+                    const pulseMagnitude = Math.sin(Date.now() / 500) * 10;
+                    yesButton.style.boxShadow = `0 0 ${10 + pulseMagnitude}px ${5 + pulseMagnitude/2}px rgba(76, 209, 55, 0.7)`;
+                    
+                    if (noCount >= 13) {
+                        // Make Yes button follow mouse slightly
+                        const mouseX = e.clientX;
+                        const mouseY = e.clientY;
+                        const buttonRect = yesButton.getBoundingClientRect();
+                        const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+                        const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+                        
+                        // Calculate distance between mouse and button
+                        const deltaX = mouseX - buttonCenterX;
+                        const deltaY = mouseY - buttonCenterY;
+                        
+                        // Move button slightly towards mouse (more attraction after more no clicks)
+                        const attraction = Math.min((noCount - 10) / 20, 0.3);
+                        yesButton.style.transform = `translate(${deltaX * attraction}px, ${deltaY * attraction}px) scale(1.1)`;
+                    }
+                }
             });
-
-            noButton.addEventListener("mouseout", () => {
-                noButton.style.boxShadow = "none";
+            
+            // Initialize floating hearts
+            createFloatingHearts();
+            
+            // Add subtle hover effects to buttons
+            yesButton.addEventListener('mouseover', () => {
+                yesButton.animate([
+                    { transform: "scale(1)" },
+                    { transform: "scale(1.1)" }
+                ], {
+                    duration: 200,
+                    fill: "forwards"
+                });
             });
+            
+            yesButton.addEventListener('mouseout', () => {
+                yesButton.animate([
+                    { transform: "scale(1.1)" },
+                    { transform: "scale(1)" }
+                ], {
+                    duration: 200,
+                    fill: "forwards"
+                });
+            });
+            
+            // Change cat gif occasionally
+            setInterval(() => {
+                // Only change if not on success state
+                if (!yesButton.disabled) {
+                    const randomIndex = Math.floor(Math.random() * 2); // Only use first two gifs for random changes
+                    catGif.src = catGifs[randomIndex];
+                }
+            }, 5000);
         });
     </script>
 </body>
