@@ -17,8 +17,7 @@
         body, html {
             width: 100%;
             height: 100vh;
-            background-color: #f9f7fe;
-            background-image: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            background-image: url("https://img.freepik.com/free-vector/cloud-background-vector-cute-desktop-wallpaper_53876-136885.jpg");
             background-size: cover;
             background-position: center;
             position: relative;
@@ -241,7 +240,7 @@
             <button class="answerButton" id="noButton">no o(╥﹏╥)o</button>
         </div>
         
-        <img src="cat.gif" alt="cat asking question" class="responsive" id="catGif" />
+        <img src="Gifs/cat.gif" alt="cat asking question" class="responsive" id="catGif" />
     </div>
     
     <div id="messageBox"></div>
@@ -264,11 +263,11 @@
             // Counter for no button interactions
             let noCount = 0;
             
-            // Array of cat reaction GIFs - all using the local gif
+            // Array of cat reaction GIFs - all using the local path
             const catGifs = [
-                "cat.gif", // Default cat
-                "cat.gif", // Same cat for sad state
-                "cat.gif"  // Same cat for happy state
+                "Gifs/cat.gif", // Default cat
+                "Gifs/cat.gif", // For sad cat (same file)
+                "Gifs/cat.gif"  // For happy cat (same file)
             ];
             
             // Array of playful messages
@@ -447,7 +446,7 @@
                 });
                 
                 // Change cat gif
-                catGif.src = catGifs[1]; // Sad cat (same GIF in this case)
+                catGif.src = catGifs[1]; // Sad cat
                 
                 // Show sad emoji reaction
                 const emoji = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
@@ -473,8 +472,8 @@
                 const message = playMessages[Math.floor(Math.random() * playMessages.length)];
                 showMessage(message, 5000);
                 
-                // Change cat gif to happy cat (same GIF in this case)
-                catGif.src = catGifs[2];
+                // Change cat gif to happy cat
+                catGif.src = catGifs[2]; // Happy cat
                 
                 // Show happy emoji reaction
                 const emoji = happyEmojis[Math.floor(Math.random() * happyEmojis.length)];
@@ -542,7 +541,7 @@
                 valentineQuestion.style.color = "#ff6b6b";
                 
                 // Sad animation for the cat
-                catGif.src = catGifs[1]; // Sad cat (same GIF in this case)
+                catGif.src = catGifs[1]; // Sad cat
                 catGif.animate([
                     { transform: "scale(1) rotate(0deg)" },
                     { transform: "scale(0.9) rotate(-5deg)" },
@@ -722,13 +721,12 @@
                 });
             });
             
-            // Change cat gif occasionally - no need for this with a single GIF
-            // But keeping the code structure in case you want to add more GIFs later
+            // Change cat gif occasionally
             setInterval(() => {
                 // Only change if not on success state
                 if (!yesButton.disabled) {
-                    // We're just using the same GIF for all states in this version
-                    catGif.src = catGifs[0];
+                    const randomIndex = Math.floor(Math.random() * 2); // Only use first two gifs for random changes
+                    catGif.src = catGifs[randomIndex];
                 }
             }, 5000);
         });
