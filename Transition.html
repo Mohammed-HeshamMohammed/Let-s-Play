@@ -7,87 +7,275 @@
     <link rel="stylesheet" href="css/valentine.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital,wght@1,300&family=Poppins:wght@400;700&family=Roboto:wght@400;700&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital,wght@0,300;0,400;0,700;1,300&family=Poppins:wght@400;700&family=Roboto:wght@400;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Bellota Text', sans-serif;
         }
+        
         body, html {
             width: 100%;
             height: 100vh;
             background-image: url("https://img.freepik.com/free-vector/cloud-background-vector-cute-desktop-wallpaper_53876-136885.jpg?w=826&t=st=1704789857~exp=1704790457~hmac=381926ab355f58892a476af4dd9c1b104192572bd7b1a38ac49528094d2ec6ce");
             background-size: cover;
+            background-position: center;
             position: relative;
+            overflow: hidden;
         }
+        
         .confirmation {
             width: 100%;
             height: 100vh;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            border-radius: 10px;
-            padding: 20px;
-            z-index: 5;
-        }
-        .confirmation h1 {
-            font-style: bolder;
-            font-size: 40px; /* Increased font size */
-            font-weight: 700;
-            text-shadow: 0px 3px 6px rgb(147, 77, 77);
-            line-height: 50px; /* Adjusted line height */
-        }
-        .gif {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            height: auto;
+            text-align: center;
+            padding: 20px;
+            z-index: 5;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        
+        .confirmation h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #6d214f;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .gif-container {
             position: relative;
-            z-index: 1;
+            margin-top: 1.5rem;
+            animation: pulse 2s ease-in-out infinite alternate;
         }
+        
         .gifimg {
-            border-radius: 10px;
-            width: 253px;
-            height: 191px;
+            border-radius: 15px;
+            width: 300px;
+            height: 230px;
             background-size: cover;
+            background-position: center;
             background-image: url("Gifs/tran.gif");
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 5px solid rgba(255, 255, 255, 0.7);
         }
-        @media screen and (max-width: 600px) {
+        
+        .heart {
+            position: absolute;
+            background-color: #ff5e8a;
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            transform: rotate(-45deg);
+            opacity: 0;
+        }
+        
+        .heart:before,
+        .heart:after {
+            content: "";
+            background-color: #ff5e8a;
+            border-radius: 50%;
+            height: 20px;
+            position: absolute;
+            width: 20px;
+        }
+        
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+        
+        .hearts-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes floating {
+            0% {
+                transform: translateY(0) rotate(-45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+        
+        .progress-container {
+            width: 60%;
+            max-width: 300px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            border-radius: 10px;
+            transition: width 0.1s linear;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .confirmation h1 {
+                font-size: 2.2rem;
+                padding: 0 15px;
+            }
+            
             .gifimg {
-                border-radius: 10px;
                 width: 253px;
                 height: 191px;
             }
-            .confirmation {
-                width: 100%;
-                height: 100vh;
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                text-align: center;
+            
+            .progress-container {
+                width: 80%;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .confirmation h1 {
+                font-size: 1.8rem;
+            }
+            
+            .gifimg {
+                width: 220px;
+                height: 170px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="hearts-container" id="hearts"></div>
+    
     <div class="confirmation">
         <h1>Thank you lots<br>I hope I can always play with you and make you smile like you make me</h1>
-        <div class="gif">
+        <div class="gif-container">
             <div class="gifimg"></div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                window.location.href = 'lastpage.html';
-            }, 3000); // Display confirmation for 20 seconds before redirecting
+            // Progress bar animation
+            const progressBar = document.getElementById('progress');
+            const totalTime = 3000; // 3 seconds
+            const updateInterval = 30; // update every 30ms
+            let elapsed = 0;
+            
+            const interval = setInterval(() => {
+                elapsed += updateInterval;
+                const progress = (elapsed / totalTime) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                if (elapsed >= totalTime) {
+                    clearInterval(interval);
+                    window.location.href = 'lastpage.html';
+                }
+            }, updateInterval);
+            
+            // Create floating hearts animation
+            const heartsContainer = document.getElementById('hearts');
+            
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // Random position
+                const x = Math.random() * window.innerWidth;
+                const y = window.innerHeight + 100;
+                
+                // Random size
+                const size = Math.random() * 15 + 10;
+                
+                heart.style.left = `${x}px`;
+                heart.style.bottom = `-${size}px`;
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+                
+                // Random color variations
+                const hue = Math.random() * 30 + 340; // pink to light red range
+                heart.style.backgroundColor = `hsl(${hue}, 100%, 65%)`;
+                
+                // Set the same color for pseudo-elements
+                const style = document.createElement('style');
+                style.textContent = `
+                    .heart[style*="left: ${x}px"]:before,
+                    .heart[style*="left: ${x}px"]:after {
+                        background-color: hsl(${hue}, 100%, 65%);
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Animation
+                const duration = Math.random() * 3 + 3;
+                heart.style.animation = `floating ${duration}s linear forwards`;
+                
+                heartsContainer.appendChild(heart);
+                
+                // Remove heart after animation completes
+                setTimeout(() => {
+                    heart.remove();
+                    style.remove();
+                }, duration * 1000);
+            }
+            
+            // Create hearts periodically
+            setInterval(createHeart, 300);
         });
     </script>
 </body>
